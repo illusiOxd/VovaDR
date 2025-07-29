@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 МЕГА ДЕНЬ РОЖДЕНИЯ ВОВЫ 🎉</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(45deg, #ff1493, #ff69b4, #ff4500, #ffd700);
+      background-size: 400% 400%;
+      animation: gradientShift 3s ease infinite;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .congratulation {
+      background: rgba(255, 255, 255, 0.95);
+      color: #8b008b;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      font-size: 1.2em;
+      line-height: 1.6;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .buttons {
+      margin: 30px 0;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #32cd32, #00ff00);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.3em;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .btn.surprise {
+      background: linear-gradient(45deg, #ff4500, #ff6347);
+    }
+
+    .game-container {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(65, 105, 225, 0.8);
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .game-canvas {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #87ceeb, #add8e6);
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      cursor: crosshair;
+      border: 3px solid #4169e1;
+    }
+
+    .cow {
+      position: absolute;
+      font-size: 2.5em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+      animation: cowFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes cowFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    .cow:hover {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: particleExplode 1s ease-out forwards;
+    }
+
+    @keyframes particleExplode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0) translateY(-50px);
+        opacity: 0;
+      }
+    }
+
+    .score-popup {
+      position: absolute;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #ffff00;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+      pointer-events: none;
+      animation: scorePopup 1.5s ease-out forwards;
+    }
+
+    @keyframes scorePopup {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-50px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .achievement {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(45deg, #ffd700, #ffff00);
+      color: #8b4513;
+      padding: 20px 40px;
+      border-radius: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: achievementShow 3s ease-in-out forwards;
+      z-index: 1000;
+    }
+
+    @keyframes achievementShow {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+      20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+      80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+    }
+
+    .surprise-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+    }
+
+    .surprise-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(45deg, #ff69b4, #ff1493);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      text-align: left;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: white;
+      cursor: pointer;
+    }
+
+    .confetti {
+      position: fixed;
+      font-size: 2em;
+      animation: confettiFall 3s linear infinite;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .game-over {
+      background: rgba(255, 20, 147, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+
+    .bonus-item {
+      position: absolute;
+      font-size: 2em;
+      cursor: pointer;
+      animation: bonusPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes bonusPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    @media (max-width: 768px) {
+      .title { font-size: 2em; }
+      .congratulation { font-size: 1em; padding: 15px; }
+      .btn { font-size: 1.1em; padding: 12px 25px; }
+      .game-stats { flex-direction: column; text-align: center; }
+      .game-canvas { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div id="mainScreen">
+    <h1 class="title">🎂 С ДНЁМ РОЖДЕНИЯ, ВОВА! 🎂</h1>
+
+    <div class="congratulation">
+      🎨 <strong>Вова, ты — шедевральный художник и музыкант с душой!</strong> 🎵<br>
+      💪 <strong>Ты просто охренительный человек, от которого все тащатся!</strong> 💯<br>
+      👑 <strong>Тёлки от тебя текут, друзья уважают, жизнь — твоя сцена!</strong> 🌟<br>
+      🚀 <strong>Желаю тебе кайфа, побед и бесконечного вдохновения!</strong> ❤️<br>
+      🎮 <strong>А теперь давай сыграем в крутую игру специально для тебя!</strong> 🔥
+    </div>
+
+    <div class="buttons">
+      <button class="btn" onclick="startGame()">🐄 ПОЙМАТЬ ВСЕХ ТЁЛОК! 🐄</button>
+      <button class="btn surprise" onclick="showSurprise()">🎁 СЮРПРИЗ ДЛЯ ВОВЫ 🎁</button>
+    </div>
+  </div>
+
+  <div id="gameScreen" class="game-container">
+    <div class="game-stats">
+      <div class="stat">💯 Счёт: <span id="score">0</span></div>
+      <div class="stat">⚡ Уровень: <span id="level">1</span></div>
+      <div class="stat">🔥 Комбо: <span id="combo">0</span></div>
+      <div class="stat">⏰ Время: <span id="timer">30</span></div>
+    </div>
+
+    <div id="gameCanvas" class="game-canvas"></div>
+
+    <div id="gameOver" class="game-over" style="display: none;">
+      <h2>🎉 ИГРА ОКОНЧЕНА! 🎉</h2>
+      <p id="finalScore"></p>
+      <button class="btn" onclick="restartGame()">🔄 ИГРАТЬ ЕЩЁ РАЗ</button>
+      <button class="btn surprise" onclick="backToMain()">🏠 НА ГЛАВНУЮ</button>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно сюрприза -->
+<div id="surpriseModal" class="surprise-modal">
+  <div class="surprise-content">
+    <button class="close-btn" onclick="closeSurprise()">&times;</button>
+    <h2>🎁 ПЕРСОНАЛЬНОЕ ПОСЛАНИЕ ДЛЯ ВОВЫ 🎁</h2>
+    <br>
+    <p><strong>🎨 Братан, ты не просто друг — ты легенда! 🌟</strong></p>
+    <p><strong>🎵 Твоё творчество вдохновляет, твоя музыка качает душу!</strong></p>
+    <p><strong>🎨 Ты умеешь делать этот мир ярче и прикольнее!</strong></p>
+    <br>
+    <p><strong>Пусть в новом году жизни у тебя будет:</strong></p>
+    <p>🚀 Больше крутых проектов</p>
+    <p>💰 Много денег за твоё искусство</p>
+    <p>❤️ Любовь и понимание близких</p>
+    <p>🎪 Приключения и незабываемые моменты</p>
+    <p>🏆 Признание твоего таланта</p>
+    <br>
+    <p><strong>🎂 Ты достоин всего самого лучшего, Вова!</strong></p>
+    <p><strong>🎉 С днём рождения, чемпион!</strong></p>
+  </div>
+</div>
+
+<script>
+  let gameActive = false;
+  let score = 0;
+  let level = 1;
+  let combo = 0;
+  let timeLeft = 30;
+  let cowInterval;
+  let timerInterval;
+  let bonusInterval;
+  let achievements = [];
+
+  const mainScreen = document.getElementById('mainScreen');
+  const gameScreen = document.getElementById('gameScreen');
+  const gameCanvas = document.getElementById('gameCanvas');
+  const gameOver = document.getElementById('gameOver');
+  const surpriseModal = document.getElementById('surpriseModal');
+
+  function startGame() {
+    mainScreen.style.display = 'none';
+    gameScreen.style.display = 'block';
+    gameOver.style.display = 'none';
+
+    gameActive = true;
+    score = 0;
+    level = 1;
+    combo = 0;
+    timeLeft = 30;
+    achievements = [];
+
+    updateUI();
+    spawnCow();
+    startTimer();
+    startBonusSpawner();
+    createConfetti();
+  }
+
+  function spawnCow() {
+    if (!gameActive) return;
+
+    const oldCows = gameCanvas.querySelectorAll('.cow');
+    oldCows.forEach(cow => cow.remove());
+
+    const cow = document.createElement('div');
+    cow.className = 'cow';
+
+    const cows = ['🐄', '🐮', '🥛', '🍼'];
+    cow.textContent = cows[Math.floor(Math.random() * cows.length)];
+
+    const maxX = gameCanvas.offsetWidth - 60;
+    const maxY = gameCanvas.offsetHeight - 60;
+    cow.style.left = Math.random() * maxX + 'px';
+    cow.style.top = Math.random() * maxY + 'px';
+
+    cow.addEventListener('click', (e) => catchCow(e, cow));
+    gameCanvas.appendChild(cow);
+
+    const speed = Math.max(500, 1000 - (level * 50));
+    cowInterval = setTimeout(spawnCow, speed);
+  }
+
+  function catchCow(e, cow) {
+    e.stopPropagation();
+
+    const points = 10 * level * Math.max(1, combo);
+    score += points;
+    combo++;
+
+    createHitEffect(e.pageX, e.pageY, points);
+    createParticles(e.pageX, e.pageY);
+
+    cow.remove();
+
+    checkAchievements();
+
+    const newLevel = Math.floor(score / 100) + 1;
+    if (newLevel > level) {
+      level = newLevel;
+      showAchievement(`🎉 УРОВЕНЬ ${level} 🎉`);
+    }
+
+    updateUI();
+  }
+
+  gameCanvas.addEventListener('click', (e) => {
+    if (e.target === gameCanvas) {
+      combo = 0;
+      createMissEffect(e.pageX, e.pageY);
+      updateUI();
+    }
+  });
+
+  function createHitEffect(x, y, points) {
+    const scorePopup = document.createElement('div');
+    scorePopup.className = 'score-popup';
+    scorePopup.textContent = `+${points}`;
+    scorePopup.style.left = x + 'px';
+    scorePopup.style.top = y + 'px';
+    document.body.appendChild(scorePopup);
+
+    setTimeout(() => scorePopup.remove(), 1500);
+  }
+
+  function createMissEffect(x, y) {
+    const missPopup = document.createElement('div');
+    missPopup.className = 'score-popup';
+    missPopup.textContent = 'МИМО! 😢';
+    missPopup.style.color = '#ff0000';
+    missPopup.style.left = x + 'px';
+    missPopup.style.top = y + 'px';
+    document.body.appendChild(missPopup);
+
+    setTimeout(() => missPopup.remove(), 1500);
+  }
+
+  function createParticles(x, y) {
+    const colors = ['#ff0000', '#ff4500', '#ffd700', '#32cd32', '#1e90ff', '#8a2be2'];
+
+    for (let i = 0; i < 8; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+
+      const angle = (i / 8) * 2 * Math.PI;
+      const distance = 50;
+      particle.style.setProperty('--dx', Math.cos(angle) * distance + 'px');
+      particle.style.setProperty('--dy', Math.sin(angle) * distance + 'px');
+
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 1000);
+    }
+  }
+
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      if (!gameActive) return;
+
+      timeLeft--;
+      document.getElementById('timer').textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        endGame();
+      }
+    }, 1000);
+  }
+
+  function startBonusSpawner() {
+    bonusInterval = setInterval(() => {
+      if (!gameActive) return;
+
+      if (Math.random() < 0.3) {
+        createBonus();
+      }
+    }, 5000);
+  }
+
+  function createBonus() {
+    const bonus = document.createElement('div');
+    bonus.className = 'bonus-item';
+
+    const bonuses = ['🎁', '⭐', '💎', '🍰', '🎈'];
+    bonus.textContent = bonuses[Math.floor(Math.random() * bonuses.length)];
+
+    const maxX = gameCanvas.offsetWidth - 40;
+    const maxY = gameCanvas.offsetHeight - 40;
+    bonus.style.left = Math.random() * maxX + 'px';
+    bonus.style.top = Math.random() * maxY + 'px';
+
+    bonus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      score += 50;
+      timeLeft += 5;
+      createHitEffect(e.pageX, e.pageY, 50);
+      bonus.remove();
+      updateUI();
+    });
+
+    gameCanvas.appendChild(bonus);
+
+    setTimeout(() => {
+      if (bonus.parentNode) bonus.remove();
+    }, 3000);
+  }
+
+  function checkAchievements() {
+    if (score >= 500 && !achievements.includes('Мастер')) {
+      achievements.push('Мастер');
+      showAchievement('🏆 МАСТЕР ЛОВЛИ ТЁЛОК! 🏆');
+    }
+
+    if (combo >= 10 && !achievements.includes('Комбо-король')) {
+      achievements.push('Комбо-король');
+      showAchievement('🔥 КОМБО-КОРОЛЬ! 🔥');
+    }
+  }
+
+  function showAchievement(text) {
+    const achievement = document.createElement('div');
+    achievement.className = 'achievement';
+    achievement.textContent = text;
+    document.body.appendChild(achievement);
+
+    setTimeout(() => achievement.remove(), 3000);
+  }
+
+  function updateUI() {
+    document.getElementById('score').textContent = score;
+    document.getElementById('level').textContent = level;
+    document.getElementById('combo').textContent = combo;
+    document.getElementById('timer').textContent = timeLeft;
+  }
+
+  function endGame() {
+    gameActive = false;
+    clearTimeout(cowInterval);
+    clearInterval(timerInterval);
+    clearInterval(bonusInterval);
+
+    gameCanvas.innerHTML = '';
+
+    document.getElementById('finalScore').innerHTML =
+            `🎉 <strong>Твой счёт: ${score}</strong><br>
+                 ⚡ <strong>Уровень: ${level}</strong><br>
+                 🏆 <strong>Вова, ты просто красавчик!</strong>`;
+
+    gameOver.style.display = 'block';
+  }
+
+  function restartGame() {
+    startGame();
+  }
+
+  function backToMain() {
+    gameScreen.style.display = 'none';
+    mainScreen.style.display = 'block';
+  }
+
+  function showSurprise() {
+    surpriseModal.style.display = 'block';
+    createConfetti();
+  }
+
+  function closeSurprise() {
+    surpriseModal.style.display = 'none';
+  }
+
+  function createConfetti() {
+    for (let i = 0; i < 50; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.textContent = ['🎉', '🎊', '⭐', '💎', '🎈'][Math.floor(Math.random() * 5)];
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+      }, i * 100);
+    }
+  }
+
+  surpriseModal.addEventListener('click', (e) => {
+    if (e.target === surpriseModal) {
+      closeSurprise();
+    }
+  });
+
+  createConfetti();
+</script>
+</body>
+</html>
